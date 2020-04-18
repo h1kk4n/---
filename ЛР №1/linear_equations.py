@@ -69,7 +69,7 @@ def matrix_method(A, B):
 def cramers_rule(A, B):
     det_A = det(A)
     if det_A == 0:
-        return "Нет корней"
+        return "Корней бесконечное количество"
     tmp_Ai = array([], dtype=float)
     roots = array([], dtype=float)
     for i in range(len(A[0])):
@@ -121,12 +121,23 @@ def main():
         m_solve = matrix_method(A, B)
         c_solve = cramers_rule(A, B)
         with open("linear_solution.txt", "a") as f:
-            savetxt(f, g_solve, fmt="%.02f; ", header="Gaussian Elimination:\n",
-                    newline="", comments="")
-            savetxt(f, c_solve, fmt="%.02f; ", header="\n\nCramer's Rule:\n",
-                    newline="", comments='')
-            savetxt(f, m_solve, fmt="%.02f; ", header='\n\nMatrix Method:\n',
-                    newline="", comments='', footer="\n\n\n\n")
+            try:
+                savetxt(f, g_solve, fmt="%.02f; ", header="Gaussian Elimination:\n",
+                        newline="", comments="")
+            except ValueError:
+                f.write("Gauss: "+g_solve+'\n')
+
+            try:
+                savetxt(f, c_solve, fmt="%.02f; ", header="\n\nCramer's Rule:\n",
+                        newline="", comments='')
+            except ValueError:
+                f.write("Cramer: "+c_solve+'\n')
+
+            try:
+                savetxt(f, m_solve, fmt="%.02f; ", header='\n\nMatrix Method:\n',
+                        newline="", comments='', footer="\n\n\n\n")
+            except ValueError:
+                f.write("Matrix: "+m_solve+'\n')
     except:
         with open('linear_solution.txt', 'a') as f:
             f.write("Something has gone wrong or system has infinite amount of or no linear roots\n\n\n\n")
