@@ -58,7 +58,7 @@ def split_matrix(matrix):
 def solution_checker(A, X, B):
     checker = matmul(A, X)
     for i in range(len(checker)):
-        if abs(B[i] - checker[i]) >= 10**(-10):
+        if abs(B[i] - checker[i]) >= 10**(-9):
             return False
     return True
 

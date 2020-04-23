@@ -22,18 +22,16 @@ def coef_split(data):
 
 def solution_checker(a, b, c, x):
     try:
-        print(round(a * x ** 2 + b * x + c))
         return round(a * x ** 2 + b * x + c) == 0
     except TypeError:
         check = (a * x ** 2 + b * x + c) ** 2
-        return  check.real <= 10**(-16) and check.imag <= 10**(-16)
+        return  abs(check.real) <= 10**(-10) and abs(check.imag) <= 10**(-10)
 
 
 def viete_solution(a, b, c):
     for x1 in range(c + 1):
         for x2 in range(c + 1):
-            if (x1 * x2) == c and (x1 + x2) == b:
-                print(x1, x2)
+            if (x1 * x2) == c and (x1 + x2) == -b:
                 if x1 != x2 and solution_checker(a, b, c, x1) and solution_checker(a, b, c, x2):
                     return 'x1 = '+str(x1)+', x2 = '+str(x2)
                 elif x1 == x2 and solution_checker(a, b, c, x1):
